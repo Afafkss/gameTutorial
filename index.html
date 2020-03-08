@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+</head>
+<body>
+<style type="text/css">
+	#canvas{
+		border:1px solid black;
+	}
+</style>
+<canvas id = "canvas" width = "320" height = "240"></canvas>
+<script type="text/javascript" src="engine.js"></script>
+<script type="text/javascript">
+  document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+
+  enemy = [];
+  player = [];
+   
+  player.push({x:0,y:0});
+  enemy.push({x:144,y:104});
+
+  document.addEventListener("mousemove",function(e){
+  	for(i in player){
+  	  player[i].x = e.pageX;
+  	  player[i].y = e.pageY;
+    }
+  });
+
+  function game(){
+  	ctx.clearRect(0,0,320,240);
+  	for(i in player){
+      ctx.fillRect(player[i].x,player[i].y,32,32);
+  	}
+
+  	for(i in enemy){
+      ctx.fillRect(enemy[i].x,enemy[i].y,32,32);
+      for(j in player){
+      	collision(enemy[i].x,enemy[i].y,player[j].x,player[j].y,32,32,32,32,player.splice(j,1),enemy.splice(i,1));
+      }
+  	}
+  }
+
+  setInterval(game,20);
+</script>
+</body>
+</html>
